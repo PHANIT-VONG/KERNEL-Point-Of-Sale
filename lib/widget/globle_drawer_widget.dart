@@ -7,7 +7,6 @@ import 'package:point_of_sale/controller/sale_controller.dart';
 import 'package:point_of_sale/modal/order_detail_modal.dart';
 import 'package:point_of_sale/modal/order_modal.dart';
 import 'package:point_of_sale/modal/post_server_modal.dart';
-import 'package:point_of_sale/screen/about_screen.dart';
 import 'package:point_of_sale/screen/contact_screen.dart';
 import 'package:point_of_sale/screen/favorite_screen.dart';
 import 'package:point_of_sale/screen/home_screen.dart';
@@ -15,7 +14,6 @@ import 'package:point_of_sale/screen/sale_group_screen.dart';
 import 'package:point_of_sale/screen/setting_screen.dart';
 import 'package:point_of_sale/screen/summary_sale_screen.dart';
 import 'package:point_of_sale/screen/table_group_screen.dart';
-import 'package:point_of_sale/widget/print_home.dart';
 import 'pos_list_tile_widget.dart';
 
 class GlobleDrawerWidget extends StatefulWidget {
@@ -138,18 +136,18 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                     (route) => false);
               },
             ),
-            PosListTile(
-              leading: Icons.info,
-              title: "About",
-              subTitle: "more about us",
-              trailing: Icons.arrow_forward_ios,
-              action: () async {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => AboutScreen()),
-                    (route) => false);
-              },
-            ),
+            // PosListTile(
+            //   leading: Icons.info,
+            //   title: "About",
+            //   subTitle: "more about us",
+            //   trailing: Icons.arrow_forward_ios,
+            //   action: () async {
+            //     Navigator.pushAndRemoveUntil(
+            //         context,
+            //         MaterialPageRoute(builder: (context) => AboutScreen()),
+            //         (route) => false);
+            //   },
+            // ),
             PosListTile(
               leading: Icons.phone,
               title: "Contact Us",
@@ -194,20 +192,20 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                     (route) => false);
               },
             ),
-            PosListTile(
-              leading: Icons.sync,
-              title: "Print",
-              subTitle: "upload data to local",
-              trailing: Icons.arrow_forward_ios,
-              action: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PrintHome(),
-                  ),
-                );
-              },
-            ),
+            // PosListTile(
+            //   leading: Icons.sync,
+            //   title: "Print",
+            //   subTitle: "upload data to local",
+            //   trailing: Icons.arrow_forward_ios,
+            //   action: () async {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => PrintHome(),
+            //       ),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),

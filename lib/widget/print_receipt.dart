@@ -11,7 +11,6 @@ class PrintReceipt {
     bluetooth.isConnected.then((isConnected) async {
       var date = DateTime.now();
       var order = SaleController().readOrder();
-
       if (isConnected) {
         bluetooth.printCustom(
             DateFormat("dd-MM-yyyy HH:mm:ss").format(date).toString(), 0, 0);
@@ -121,9 +120,8 @@ class PrintReceipt {
             bluetooth.printNewLine();
             bluetooth.printCustom("Thank you for your purchase !", 1, 1);
             bluetooth.printNewLine();
-
-            bluetooth.writeBytes(utf8.encode("សូមអរគុណ"));
-            //bluetooth.printCustom('សូមអរគុណ', 1, 1);
+            bluetooth.printCustom("សូមអរគុណ", 1, 1);
+            //bluetooth.writeBytes(utf8.encode("សូមអរគុណ"));
             order.then((value) {
               bluetooth.printNewLine();
               bluetooth.printQRcode("${value.first.orderNo}", 200, 200, 1);
