@@ -58,14 +58,12 @@ class _MyHomePageState extends State<PrintReceiptHome> {
                 );
               },
             ),
-      bottomNavigationBar: FlatButton(
-        onPressed: () => initPrinter(),
-        child: Text("Scan Print")
-      ),
+      bottomNavigationBar:
+          FlatButton(onPressed: () => initPrinter(), child: Text("Scan Print")),
     );
   }
 
-  void initPrinter() async{
+  void initPrinter() async {
     _printerManager.startScan(Duration(seconds: 5));
     _printerManager.scanResults.listen((val) {
       print(val);

@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_session/flutter_session.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:point_of_sale/bloc_order/bloc_order.dart';
@@ -22,8 +20,6 @@ import 'package:point_of_sale/modal/order_modal.dart';
 import 'package:point_of_sale/modal/payment_means_modal.dart';
 import 'package:point_of_sale/screen/open_shift_screen.dart';
 import 'package:point_of_sale/screen/payment_success.dart';
-import 'package:point_of_sale/screen/sale_group_screen.dart';
-import 'package:point_of_sale/screen/table_group_screen.dart';
 import 'package:point_of_sale/widget/connect_bluetooth.dart';
 import 'package:point_of_sale/widget/print_receipt.dart';
 import 'dart:io';
@@ -216,30 +212,28 @@ class _State extends State<PayOrder> {
                               child: Column(
                                 children: [
                                   Column(
-                                    children: lsPay.map(
-                                      (e) {
-                                        return ListTile(
-                                          title: Text(
-                                            '${e.type}',
-                                            style: GoogleFonts.laila(
-                                              textStyle: TextStyle(
-                                                  fontSize: 17.0,
-                                                  fontWeight: FontWeight.w400),
-                                            ),
+                                    children: lsPay.map((e) {
+                                      return ListTile(
+                                        title: Text(
+                                          '${e.type}',
+                                          style: GoogleFonts.laila(
+                                            textStyle: TextStyle(
+                                                fontSize: 17.0,
+                                                fontWeight: FontWeight.w400),
                                           ),
-                                          trailing: Radio(
-                                            value: lsPay.indexOf(e) + 1,
-                                            groupValue: _isChecked,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _isChecked = value;
-                                                typeBank = e.type;
-                                              });
-                                            },
-                                          ),
-                                        );
-                                      },
-                                    ).toList(),
+                                        ),
+                                        trailing: Radio(
+                                          value: lsPay.indexOf(e) + 1,
+                                          groupValue: _isChecked,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _isChecked = value;
+                                              typeBank = e.type;
+                                            });
+                                          },
+                                        ),
+                                      );
+                                    }).toList(),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -482,37 +476,36 @@ class _State extends State<PayOrder> {
           } else {
             var set = await SettingController().getSetting(0);
             if (set.first.printReceiptTender) {
-              bluetooth.isConnected.then(
-                (isConnected) async {
-                  if (isConnected) {
-                    await prints.sample(pathImage, result);
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              PaymentSuccess("Payment successful", data.status),
-                        ),
-                        (route) => false);
-                  } else {
-                    Navigator.pop(context);
-                    Navigator.push(
+              bluetooth.isConnected.then((isConnected) async {
+                if (isConnected) {
+                  await prints.sample(pathImage, result);
+                  Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ConnectionBluetooth(),
+                        builder: (context) =>
+                            PaymentSuccess("Payment successful", data.status),
                       ),
-                    );
-                  }
-                },
-              );
+                      (route) => false);
+                } else {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ConnectionBluetooth(),
+                    ),
+                  );
+                }
+              });
             } else {
               // not print pay
               Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        PaymentSuccess("Payment successful", data.status),
-                  ),
-                  (route) => false);
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      PaymentSuccess("Payment successful", data.status),
+                ),
+                (route) => false,
+              );
             }
           }
         } else {
@@ -534,10 +527,8 @@ class _State extends State<PayOrder> {
         );
       }
     } else {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text("No Internet Connection !"),
-        ),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No Internet Connection !')),
       );
 
       //trancesion offline

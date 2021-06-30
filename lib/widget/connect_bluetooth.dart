@@ -6,6 +6,7 @@ import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:point_of_sale/widget/print_receipt.dart';
+import 'package:point_of_sale/widget/print_summary_receipt.dart';
 
 class ConnectionBluetooth extends StatefulWidget {
   @override
@@ -19,12 +20,14 @@ class _ConnectionBluetoothState extends State<ConnectionBluetooth> {
   bool _connected = false;
   String pathImage;
   PrintReceipt testPrint;
+  PrintReceiptSummary printReceiptSummary;
   @override
   void initState() {
     super.initState();
     initPlatformState();
     initSaveToPath();
     testPrint = PrintReceipt();
+    printReceiptSummary = PrintReceiptSummary();
   }
 
   initSaveToPath() async {

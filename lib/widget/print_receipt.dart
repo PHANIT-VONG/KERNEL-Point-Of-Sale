@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:intl/intl.dart';
 import 'package:point_of_sale/controller/receipt_information_controller.dart';
