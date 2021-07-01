@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sale/controller/account_loging_controller.dart';
-import 'package:point_of_sale/controller/branch_controller.dart';
 import 'package:point_of_sale/controller/local_currency_controller.dart';
 import 'package:point_of_sale/modal/account_loging.dart';
 import 'package:point_of_sale/modal/branch_modal.dart';
@@ -139,16 +138,17 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         SizedBox(height: 10.0),
         Container(
+          height: 50.0,
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: Color(0xFF689F38),
+            color: Colors.white,
             border: Border.all(
               color: _colorUsername
                   ? Color(0xFF689F38)
-                  : Colors.red, //                   <--- border color
+                  : Colors.red, //  <--- border color
               width: _withUsername ? 0.0 : 1,
             ),
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(15.0),
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
@@ -157,12 +157,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
-          height: 60.0,
           child: TextField(
             controller: _username,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -170,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.person,
-                color: Colors.white,
+                color: Colors.black,
               ),
               hintText: 'Enter your username',
               hintStyle: kHintTextStyle,
@@ -204,16 +203,17 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         SizedBox(height: 10.0),
         Container(
+          height: 50.0,
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: Color(0xFF689F38),
+            color: Colors.white,
             border: Border.all(
               color: _colorPass
                   ? Color(0xFF689F38)
                   : Colors.red, //                   <--- border color
               width: _withPass ? 0.0 : 1,
             ),
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(15.0),
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
@@ -222,12 +222,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
-          height: 60.0,
           child: TextField(
             controller: _pass,
             obscureText: _obscureText,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -235,12 +234,12 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.white,
+                color: Colors.black,
               ),
               suffixIcon: IconButton(
                 icon: Icon(
                   _showPassword ? Icons.remove_red_eye : Icons.visibility_off,
-                  color: _showPassword ? Colors.white : Colors.grey,
+                  color: _showPassword ? Colors.green : Colors.black,
                 ),
                 onPressed: () {
                   setState(() {
@@ -279,7 +278,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildForgotPasswordBtn() {
+  Widget _buildForgotPasswordBTN() {
     return Container(
       padding: EdgeInsets.only(right: 0.0),
       alignment: Alignment.centerRight,
@@ -320,25 +319,40 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildLoginBtn() {
+  Widget _buildLoginBTN() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
-      child: RaisedButton(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+      child: MaterialButton(
         elevation: 5.0,
+        color: Colors.white,
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Text(
+          'LOGIN',
+          style: TextStyle(
+            color: Colors.green,
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
         onPressed: () async {
-          if (_selectedBranch == null) {
-            setState(() {
-              _colorBranch = false;
-              _withPass = false;
-            });
-            return;
-          } else {
-            setState(() {
-              _colorBranch = true;
-              _withPass = true;
-            });
-          }
+          // if (_selectedBranch == null) {
+          //   setState(() {
+          //     _colorBranch = false;
+          //     _withPass = false;
+          //   });
+          //   return;
+          // } else {
+          //   setState(() {
+          //     _colorBranch = true;
+          //     _withPass = true;
+          //   });
+          // }
           if (_username.text.trim() == "") {
             setState(() {
               _colorUsername = false;
@@ -363,13 +377,12 @@ class _LoginScreenState extends State<LoginScreen> {
               _withPass = true;
             });
           }
-
           showAlertDialog(context);
           await Future.delayed(Duration(seconds: 2));
           bool result = await DataConnectionChecker().hasConnection;
           if (result) {
             AccountLogin acc = new AccountLogin(
-              branchId: _selectedBranch,
+              //branchId: _selectedBranch,
               password: _pass.text.trim(),
               userName: _username.text.trim(),
             );
@@ -397,13 +410,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 FlutterSession().set("branchId", status.branchId);
                 Navigator.pop(context);
                 Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => HomeScreen(
-                              branchName: _username.text,
-                              userName: _username.text,
-                            )),
-                    (route) => true);
+                  context,
+                  MaterialPageRoute(builder: (_) => HomeScreen()),
+                  (route) => true,
+                );
               }
             }
           } else {
@@ -412,21 +422,6 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
         },
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: Text(
-          'LOGIN',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
-        ),
       ),
     );
   }
@@ -460,13 +455,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   // ignore: must_call_super
   void initState() {
-    BranchController.eachBranch().then((value) {
-      if (mounted) {
-        setState(() {
-          lsBranch = value;
-        });
-      }
-    });
+    // BranchController.eachBranch().then((value) {
+    //   if (mounted) {
+    //     setState(() {
+    //       lsBranch = value;
+    //     });
+    //   }
+    // });
   }
 
   @override
@@ -506,7 +501,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: 15),
+                      SizedBox(height: 25),
                       Icon(
                         Icons.account_circle_rounded,
                         size: 130,
@@ -532,24 +527,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       //     fontWeight: FontWeight.bold,
                       //   ),
                       // ),
-                      SizedBox(height: 30.0),
-                      _builBranch(),
-                      SizedBox(
-                        height: 10.0,
-                      ),
+                      SizedBox(height: 45.0),
+                      //_builBranch(),
                       _buildEmailTF(),
                       SizedBox(
                         height: 10.0,
                       ),
                       _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
+                      _buildForgotPasswordBTN(),
                       _buildRememberMeCheckbox(),
-                      _buildLoginBtn(),
+                      _buildLoginBTN(),
                       _valid ? _buildVilidPassEmail() : Text("")
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_session/flutter_session.dart';
 import 'package:point_of_sale/modal/setting_modal.dart';
 import 'package:point_of_sale/repository/repositorys.dart';
