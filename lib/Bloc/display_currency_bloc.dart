@@ -4,6 +4,8 @@ import 'package:point_of_sale/controller/display_currency_controller.dart';
 import 'package:point_of_sale/modal/display_currency_modal.dart';
 import 'dart:async';
 
+import 'package:point_of_sale/modal/price_list_modal.dart';
+
 abstract class DisCurrencyEvent extends Equatable {
   const DisCurrencyEvent();
 }

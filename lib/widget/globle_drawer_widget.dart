@@ -14,32 +14,33 @@ import 'package:point_of_sale/screen/sale_group_screen.dart';
 import 'package:point_of_sale/screen/setting_screen.dart';
 import 'package:point_of_sale/screen/summary_sale_screen.dart';
 import 'package:point_of_sale/screen/table_group_screen.dart';
+import 'package:point_of_sale/screen/theme_screen.dart';
 import 'pos_list_tile_widget.dart';
 
 class GlobleDrawerWidget extends StatefulWidget {
-  const GlobleDrawerWidget({
-    Key key,
-  }) : super(key: key);
+  final String userName;
+  final String branchName;
+  const GlobleDrawerWidget({Key key, this.branchName, this.userName})
+      : super(key: key);
 
   @override
   _GlobleDrawerWidgetState createState() => _GlobleDrawerWidgetState();
 }
 
 class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
-  var branchName = FlutterSession().get("branchName");
-  var userName = FlutterSession().get("userName");
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
         color: Colors.white,
         child: ListView(
+          padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
               padding: EdgeInsets.all(0),
               child: UserAccountsDrawerHeader(
                 accountName: Text(
-                  '$branchName',
+                  'kernelcomputer',
                   style: GoogleFonts.laila(
                     textStyle: TextStyle(
                       fontSize: 16.0,
@@ -49,7 +50,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                   ),
                 ),
                 accountEmail: Text(
-                  '$userName',
+                  'kernelcomputer@gmail.com',
                   style: GoogleFonts.laila(
                     textStyle: TextStyle(
                       fontSize: 16.0,
@@ -62,16 +63,11 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                   backgroundImage: NetworkImage(
                     "https://www.liveblogspot.com/wp-content/uploads/2020/03/POS-System.jpg",
                   ),
-                  backgroundColor: Colors.lightGreen,
                 ),
                 otherAccountsPictures: [
-                  Icon(
-                    Icons.favorite,
-                    color: Colors.red,
+                  CircleAvatar(
+                    child: Icon(Icons.account_circle_rounded),
                   ),
-                  Icon(
-                    Icons.thumb_up,
-                  )
                 ],
               ),
             ),
@@ -88,6 +84,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                 );
               },
             ),
+            Divider(),
             PosListTile(
               leading: Icons.monetization_on_outlined,
               title: "Sale",
@@ -126,6 +123,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                 }
               },
             ),
+            Divider(),
             PosListTile(
               leading: Icons.history,
               title: "Summary Receipt",
@@ -150,6 +148,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
             //         (route) => false);
             //   },
             // ),
+            Divider(),
             PosListTile(
               leading: Icons.phone,
               title: "Contact Us",
@@ -165,6 +164,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                 );
               },
             ),
+            Divider(),
             PosListTile(
               leading: Icons.favorite,
               title: "Favorite",
@@ -182,6 +182,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                 });
               },
             ),
+            Divider(),
             PosListTile(
               leading: Icons.settings,
               title: "Setting",
@@ -194,6 +195,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                     (route) => false);
               },
             ),
+            Divider(),
             // PosListTile(
             //   leading: Icons.sync,
             //   title: "Print",

@@ -148,7 +148,7 @@ class _CombineScreenState extends State<CombineScreen> {
                   Navigator.pop(context);
                   Navigator.pop(context);
                   var getOrder =
-                  await SaleController.getOrderServer(widget.order.tableId);
+                      await SaleController.getOrderServer(widget.order.tableId);
                   await SaleController().deleteAllOrder();
                   await SaleController().deleteAllOrderDetail();
                   //has order on table

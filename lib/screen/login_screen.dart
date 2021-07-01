@@ -11,6 +11,7 @@ import 'package:point_of_sale/controller/local_currency_controller.dart';
 import 'package:point_of_sale/modal/account_loging.dart';
 import 'package:point_of_sale/modal/branch_modal.dart';
 import 'package:point_of_sale/modal/return_from_server_login.dart';
+import 'package:point_of_sale/screen/home_screen.dart';
 import 'package:point_of_sale/widget/style_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -394,13 +395,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 FlutterSession().set("systemType", 'krms');
                 FlutterSession().set("userId", status.userId);
                 FlutterSession().set("branchId", status.branchId);
-                FlutterSession().set("branchName", status.branchId);
-                FlutterSession().set("userName", _username.text);
                 Navigator.pop(context);
-                Navigator.popAndPushNamed(
-                  context,
-                  "/home",
-                );
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => HomeScreen(
+                              branchName: _username.text,
+                              userName: _username.text,
+                            )),
+                    (route) => true);
               }
             }
           } else {
@@ -551,16 +554,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-      // bottomNavigationBar: BottomAppBar(
-      //   elevation: 0,
-      //   color: Color(0xFF689F38),
-      //   child: Padding(
-      //     padding: const EdgeInsets.symmetric(
-      //       horizontal: 20,
-      //     ),
-      //     child: _buildLoginBtn(),
-      //   ),
-      // ),
     );
   }
 
