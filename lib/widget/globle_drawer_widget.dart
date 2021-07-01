@@ -26,6 +26,8 @@ class GlobleDrawerWidget extends StatefulWidget {
 }
 
 class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
+  var branchName = FlutterSession().get("branchName");
+  var userName = FlutterSession().get("userName");
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -37,7 +39,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
               padding: EdgeInsets.all(0),
               child: UserAccountsDrawerHeader(
                 accountName: Text(
-                  "Kernel Computer",
+                  '$branchName',
                   style: GoogleFonts.laila(
                     textStyle: TextStyle(
                       fontSize: 16.0,
@@ -47,7 +49,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                   ),
                 ),
                 accountEmail: Text(
-                  "Kernel@gmail.com",
+                  '$userName',
                   style: GoogleFonts.laila(
                     textStyle: TextStyle(
                       fontSize: 16.0,

@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   : Colors.red, //                   <--- border color
               width: _withBranch ? 0.0 : 2.0,
             ),
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(30.0),
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
@@ -74,10 +74,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 elevation: 0,
                 iconSize: 35,
                 isExpanded: true,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
                 hint: Padding(
                   padding: const EdgeInsets.only(left: 45),
                   child: Text(
-                    "Select brnach",
+                    "Select your branch",
                     style: kHintTextStyle,
                   ),
                 ),
@@ -144,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   : Colors.red, //                   <--- border color
               width: _withUsername ? 0.0 : 1,
             ),
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(30.0),
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
@@ -209,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   : Colors.red, //                   <--- border color
               width: _withPass ? 0.0 : 1,
             ),
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(30.0),
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
@@ -391,6 +394,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 FlutterSession().set("systemType", 'krms');
                 FlutterSession().set("userId", status.userId);
                 FlutterSession().set("branchId", status.branchId);
+                FlutterSession().set("branchName", status.branchId);
+                FlutterSession().set("userName", _username.text);
                 Navigator.pop(context);
                 Navigator.popAndPushNamed(
                   context,
@@ -399,10 +404,8 @@ class _LoginScreenState extends State<LoginScreen> {
               }
             }
           } else {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text("No Internet Connection !"),
-              ),
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('No Internet Connection !')),
             );
           }
         },
@@ -500,27 +503,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: 5),
-                      Container(
-                        height: 100,
-                        width: 100,
-                        child: Center(
-                          child: Image.asset('images/poskernel.jpg',
-                              fit: BoxFit.cover),
-                        ),
+                      SizedBox(height: 15),
+                      Icon(
+                        Icons.account_circle_rounded,
+                        size: 130,
+                        color: Colors.white,
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        'SIGN IN',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      // Container(
+                      //   height: 100,
+                      //   width: 100,
+                      //   child: Center(
+                      //     child: Image.asset('images/poskernel.jpg',
+                      //         fit: BoxFit.cover),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   'SIGN IN',
+                      //   style: TextStyle(
+                      //     color: Colors.white,
+                      //     fontFamily: 'OpenSans',
+                      //     fontSize: 30.0,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
                       SizedBox(height: 30.0),
                       _builBranch(),
                       SizedBox(
@@ -543,6 +551,16 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+      // bottomNavigationBar: BottomAppBar(
+      //   elevation: 0,
+      //   color: Color(0xFF689F38),
+      //   child: Padding(
+      //     padding: const EdgeInsets.symmetric(
+      //       horizontal: 20,
+      //     ),
+      //     child: _buildLoginBtn(),
+      //   ),
+      // ),
     );
   }
 
@@ -551,7 +569,7 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (_) => Center(
         child: Container(
-          width: 110.0,
+          width: 130.0,
           height: 92.0,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -562,7 +580,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               CircularProgressIndicator(
                 backgroundColor: Colors.green,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
               Container(
                 margin: EdgeInsets.only(top: 8),

@@ -14,7 +14,6 @@ import 'package:point_of_sale/modal/receipt_information.dart';
 import 'package:point_of_sale/modal/receipts.dart';
 import 'package:point_of_sale/screen/open_shift_screen.dart';
 import 'package:point_of_sale/screen/summary_sale_screen.dart';
-import 'package:point_of_sale/widget/print_summary_receipt.dart';
 import 'connect_bluetooth.dart';
 
 class ReviewReceipt extends StatefulWidget {
@@ -33,6 +32,7 @@ class _ReviewReceiptState extends State<ReviewReceipt> {
   String _pathImage;
   ReceiptInformation _receiptInfo = new ReceiptInformation();
   BlueThermalPrinter bluetooth = BlueThermalPrinter.instance;
+
   @override
   void initState() {
     super.initState();
@@ -150,7 +150,7 @@ class _ReviewReceiptState extends State<ReviewReceipt> {
               "Time Out    : ${widget.receipts.timeOut}", 1, 0);
           bluetooth.printCustom("-------------------------", 1, 1);
           for (var i = 0; i < _lsDetail.length; i++) {
-            bluetooth.printLeftRight("No#----------------", "${i + 1}", 0);
+            bluetooth.printLeftRight("No#  : ", "-------${i + 1}", 0);
             bluetooth.printLeftRight(
                 "Name : ",
                 "${_lsDetail[i].khmerName}(${_lsDetail[i].unitofMeansure.name}",
@@ -166,6 +166,41 @@ class _ReviewReceiptState extends State<ReviewReceipt> {
             bluetooth.printLeftRight(
                 "Total: ", "${_lsDetail[i].total.toStringAsFixed(2)}", 0);
           }
+
+          bluetooth.printCustom('----------------------', 1, 1);
+          bluetooth.printLeftRight('Sub-Total  :',
+              '${widget.receipts.subTotal.toStringAsFixed(2)}', 0);
+          bluetooth.printLeftRight('Discount   :',
+              '${widget.receipts.typeDis == "Percent" ? "%" : "Cash"}', 0);
+          bluetooth.printLeftRight(
+              'Grand-Total:',
+              '${widget.receipts.currencyDisplay + " " + widget.receipts.grandTotal.toStringAsFixed(2)}',
+              0);
+          bluetooth.printCustom('----------------------', 1, 1);
+          //-----------------------------------------------------
+          if (widget.receipts.paymentType.contains(',') == true) {
+            bluetooth.printLeftRight('Cash Pay  :',
+                '${widget.receipts.receivedType.split(',')[0]}', 0);
+            bluetooth.printLeftRight('Bank Pay  :',
+                '${widget.receipts.receivedType.split(',')[1]}', 0);
+          } else if (widget.receipts.paymentType == 'Cash') {
+            bluetooth.printLeftRight(
+                'Cash Pay  :', '${widget.receipts.receivedType}', 0);
+          } else if (widget.receipts.paymentType == 'Bank') {
+            bluetooth.printLeftRight(
+                'Bank Pay  :', '${widget.receipts.receivedType}', 0);
+          } else {
+            bluetooth.printLeftRight('Cash Pay  :', '${null}', 0);
+            bluetooth.printLeftRight('Bank Pay  :', '${null}', 0);
+          }
+          //-------------------------------------------------------
+          bluetooth.printLeftRight('Received  :',
+              '${widget.receipts.received.toStringAsFixed(2)}', 0);
+          bluetooth.printLeftRight(
+              'Change    :',
+              '${widget.receipts.currencyDisplay + " " + widget.receipts.change.toStringAsFixed(2)}',
+              0);
+          bluetooth.printCustom('Thank you for your purchases !', 1, 1);
           bluetooth.printQRcode("${_receiptInfo.branchId}", 200, 200, 1);
           bluetooth.printNewLine();
           bluetooth.printNewLine();
