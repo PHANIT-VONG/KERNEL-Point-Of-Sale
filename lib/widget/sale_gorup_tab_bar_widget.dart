@@ -43,7 +43,6 @@ class _SaleGroupTabBarWidgetState extends State<SaleGroupTabBarWidget> {
   void initState() {
     super.initState();
     getGroupItem();
-
     if (widget.checkInternet == true) {
       pageWiseController = PagewiseLoadController(
         pageSize: 10,
@@ -78,7 +77,7 @@ class _SaleGroupTabBarWidgetState extends State<SaleGroupTabBarWidget> {
           slivers: <Widget>[
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
+                (context, index) {
                   return Column(
                     children: [
                       SizedBox(
@@ -103,7 +102,10 @@ class _SaleGroupTabBarWidgetState extends State<SaleGroupTabBarWidget> {
                                     ),
                                   ),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      Image.asset(
+                                    'images/no_image.png',
+                                    fit: BoxFit.cover,
+                                  ),
                                   fit: BoxFit.cover,
                                 )
                               : Image.asset(
@@ -117,101 +119,107 @@ class _SaleGroupTabBarWidgetState extends State<SaleGroupTabBarWidget> {
                               padding: const EdgeInsets.all(5.0),
                               child: Container(
                                 width: double.infinity,
-                                height: 180,
+                                height: 150,
                                 child: ListView(
                                   scrollDirection: Axis.horizontal,
-                                  children: nexGroup.map(
-                                    (e) {
-                                      return InkWell(
-                                        onTap: () {
-                                          if (widget.type == "G1") {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SaleGroupScreen(
-                                                  type: "G2",
-                                                  lsPost: widget.lsPost,
-                                                  tableId: widget.tableId,
-                                                  g1Id: widget.lsGroupItem.g1Id,
-                                                ),
+                                  children: nexGroup.map((e) {
+                                    return InkWell(
+                                      onTap: () {
+                                        if (widget.type == "G1") {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SaleGroupScreen(
+                                                type: "G2",
+                                                lsPost: widget.lsPost,
+                                                tableId: widget.tableId,
+                                                g1Id: widget.lsGroupItem.g1Id,
                                               ),
-                                            );
-                                          } else if (widget.type == "G2") {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SaleGroupScreen(
-                                                  type: "G3",
-                                                  lsPost: widget.lsPost,
-                                                  tableId: widget.tableId,
-                                                  g1Id: widget.lsGroupItem.g1Id,
-                                                  g2Id: widget.lsGroupItem.g2Id,
-                                                ),
+                                            ),
+                                          );
+                                        } else if (widget.type == "G2") {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SaleGroupScreen(
+                                                type: "G3",
+                                                lsPost: widget.lsPost,
+                                                tableId: widget.tableId,
+                                                g1Id: widget.lsGroupItem.g1Id,
+                                                g2Id: widget.lsGroupItem.g2Id,
                                               ),
-                                            );
-                                          }
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              margin:
-                                                  EdgeInsets.only(right: 10),
-                                              height: 150,
-                                              width: 135,
-                                              child: e.image != null
-                                                  ? CachedNetworkImage(
-                                                      imageUrl:
-                                                          "${Config.image + "//Images/itemgroup/" + e.image}",
-                                                      placeholder:
-                                                          (context, url) =>
-                                                              Center(
-                                                        child: SizedBox(
-                                                          width: 40.0,
-                                                          height: 40.0,
-                                                          child:
-                                                              new CircularProgressIndicator(
-                                                            backgroundColor:
-                                                                Colors.green,
-                                                            valueColor:
-                                                                AlwaysStoppedAnimation<
-                                                                        Color>(
-                                                                    Colors.red),
-                                                          ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(right: 10),
+                                            height: 150,
+                                            width: 135,
+                                            child: e.image != null
+                                                ? CachedNetworkImage(
+                                                    imageUrl:
+                                                        "${Config.image + "//Images/itemgroup/" + e.image}",
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            Center(
+                                                      child: SizedBox(
+                                                        width: 40.0,
+                                                        height: 40.0,
+                                                        child:
+                                                            new CircularProgressIndicator(
+                                                          backgroundColor:
+                                                              Colors.green,
+                                                          valueColor:
+                                                              AlwaysStoppedAnimation<
+                                                                      Color>(
+                                                                  Colors.red),
                                                         ),
                                                       ),
-                                                      errorWidget: (context,
-                                                              url, error) =>
-                                                          Icon(Icons.error),
-                                                      fit: BoxFit.cover,
-                                                    )
-                                                  : Image.asset(
-                                                      'images/no_image.png',
-                                                      fit: BoxFit.cover,
                                                     ),
-                                            ),
-                                            Expanded(
-                                              child: Center(
-                                                child: Text(
-                                                  '${e.name}',
-                                                  style: GoogleFonts.laila(
-                                                    textStyle: TextStyle(
-                                                      fontSize: 17,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Icon(Icons.error),
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : Image.asset(
+                                                    'images/no_image.png',
+                                                    fit: BoxFit.cover,
                                                   ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                          ),
+                                          Positioned(
+                                            //height: 50,
+                                            bottom: 0,
+                                            child: Container(
+                                              height: 50,
+                                              width: 135,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                color: Colors.black
+                                                    .withOpacity(0.3),
+                                              ),
+                                              child: Text(
+                                                '${e.name}',
+                                                maxLines: 2,
+                                                style: GoogleFonts.laila(
+                                                  textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
                                                 ),
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ).toList(),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                             )

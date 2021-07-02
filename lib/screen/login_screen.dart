@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Icons.person,
                 color: Colors.black,
               ),
-              hintText: 'Enter your username',
+              hintText: 'Enter your Username',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -333,7 +333,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text(
           'LOGIN',
           style: TextStyle(
-            color: Colors.green,
+            color: Colors.black,
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -382,7 +382,7 @@ class _LoginScreenState extends State<LoginScreen> {
           bool result = await DataConnectionChecker().hasConnection;
           if (result) {
             AccountLogin acc = new AccountLogin(
-              //branchId: _selectedBranch,
+              branchId: 0,
               password: _pass.text.trim(),
               userName: _username.text.trim(),
             );

@@ -169,99 +169,100 @@ class merageTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
-      children: table.map(
-        (e) {
-          return Container(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: InkWell(
-                onTap: () async {
-                  var checkOrder = await SaleController().readOrderDetail();
-                  if (checkOrder.length > 0) {
-                    SaleController().deleteAllOrder();
-                    SaleController().deleteAllOrderDetail();
-                  }
-                  var getOrder = await SaleController.getOrderServer(e.tableId);
+      children: table.map((e) {
+        print(e.image);
+        return Container(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: InkWell(
+              onTap: () async {
+                var checkOrder = await SaleController().readOrderDetail();
+                if (checkOrder.length > 0) {
+                  SaleController().deleteAllOrder();
+                  SaleController().deleteAllOrderDetail();
+                }
+                var getOrder = await SaleController.getOrderServer(e.tableId);
 
-                  //has order on table
-                  if (getOrder.length > 0) {
-                    buildOrder(getOrder[0]);
-                  } // no order on  table
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SaleGroupScreen(
-                        type: "G1",
-                        tableId: e.tableId,
-                        lsPost: getOrder,
-                      ),
+                //has order on table
+                if (getOrder.length > 0) {
+                  buildOrder(getOrder[0]);
+                } // no order on  table
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SaleGroupScreen(
+                      type: "G1",
+                      tableId: e.tableId,
+                      lsPost: getOrder,
                     ),
-                  );
-                },
-                child: Card(
-                  shadowColor: Colors.grey,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          width: double.infinity,
-                          child: e.image != null
-                              ? CachedNetworkImage(
-                                  imageUrl:
-                                      "${Config.image + "/Images/table/" + e.image}",
-                                  placeholder: (context, url) => Center(
-                                    child: SizedBox(
-                                      width: 40.0,
-                                      height: 40.0,
-                                      child: new CircularProgressIndicator(
-                                        backgroundColor: Colors.green,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.red),
-                                      ),
+                  ),
+                );
+              },
+              child: Card(
+                shadowColor: Colors.grey,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        child: e.image != null
+                            ? CachedNetworkImage(
+                                imageUrl:
+                                    "${Config.image + "/Images/table/" + e.image}",
+                                placeholder: (context, url) => Center(
+                                  child: SizedBox(
+                                    width: 40.0,
+                                    height: 40.0,
+                                    child: new CircularProgressIndicator(
+                                      backgroundColor: Colors.green,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.red),
                                     ),
                                   ),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
                                   "images/no_image.png",
                                   fit: BoxFit.cover,
                                 ),
-                        ),
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                "images/no_image.png",
+                                fit: BoxFit.cover,
+                              ),
                       ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 40,
-                        color: e.status == "A"
-                            ? Colors.grey[300]
-                            : e.status == "B"
-                                ? Colors.red
-                                : e.status == "P"
-                                    ? Color.fromRGBO(76, 175, 80, 1)
-                                    : Colors.grey[300],
-                        child: Center(
-                          child: Text(
-                            "${e.name}",
-                            style: GoogleFonts.laila(
-                              textStyle: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
-                            ),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 40,
+                      color: e.status == "A"
+                          ? Colors.grey[300]
+                          : e.status == "B"
+                              ? Colors.red
+                              : e.status == "P"
+                                  ? Color.fromRGBO(76, 175, 80, 1)
+                                  : Colors.grey[300],
+                      child: Center(
+                        child: Text(
+                          "${e.name}",
+                          style: GoogleFonts.laila(
+                            textStyle: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        },
-      ).toList(),
+          ),
+        );
+      }).toList(),
     );
   }
 
@@ -403,24 +404,22 @@ class SearchTable extends SearchDelegate<String> {
             ),
           )
         : ListView(
-            children: ls.map(
-              (e) {
-                return ListTile(
-                  onTap: () {
-                    showResults(context);
-                    tables = [];
-                    tables.add(e);
-                  },
-                  title: Text(
-                    "${e.name}",
-                    style: GoogleFonts.laila(
-                      textStyle: TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.w500),
-                    ),
+            children: ls.map((e) {
+              return ListTile(
+                onTap: () {
+                  showResults(context);
+                  tables = [];
+                  tables.add(e);
+                },
+                title: Text(
+                  "${e.name}",
+                  style: GoogleFonts.laila(
+                    textStyle:
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                   ),
-                );
-              },
-            ).toList(),
+                ),
+              );
+            }).toList(),
           );
   }
 }

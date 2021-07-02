@@ -14,14 +14,10 @@ import 'package:point_of_sale/screen/sale_group_screen.dart';
 import 'package:point_of_sale/screen/setting_screen.dart';
 import 'package:point_of_sale/screen/summary_sale_screen.dart';
 import 'package:point_of_sale/screen/table_group_screen.dart';
-import 'package:point_of_sale/screen/theme_screen.dart';
 import 'pos_list_tile_widget.dart';
 
 class GlobleDrawerWidget extends StatefulWidget {
-  final String userName;
-  final String branchName;
-  const GlobleDrawerWidget({Key key, this.branchName, this.userName})
-      : super(key: key);
+  const GlobleDrawerWidget({Key key}) : super(key: key);
 
   @override
   _GlobleDrawerWidgetState createState() => _GlobleDrawerWidgetState();
@@ -84,7 +80,6 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                 );
               },
             ),
-            Divider(),
             PosListTile(
               leading: Icons.monetization_on_outlined,
               title: "Sale",
@@ -123,7 +118,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                 }
               },
             ),
-            Divider(),
+
             PosListTile(
               leading: Icons.history,
               title: "Summary Receipt",
@@ -164,7 +159,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                 );
               },
             ),
-            Divider(),
+
             PosListTile(
               leading: Icons.favorite,
               title: "Favorite",
@@ -182,7 +177,7 @@ class _GlobleDrawerWidgetState extends State<GlobleDrawerWidget> {
                 });
               },
             ),
-            Divider(),
+
             PosListTile(
               leading: Icons.settings,
               title: "Setting",

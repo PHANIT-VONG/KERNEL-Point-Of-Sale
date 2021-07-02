@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:point_of_sale/modal/group_table_modal.dart';
@@ -9,11 +8,11 @@ import 'package:http/http.dart' as http;
 
 class GroupTableController {
   static Future<List<GroupTable>> eachGroupTable() async {
-    dynamic branch = await FlutterSession().get("branchId");
+    dynamic branchId = await FlutterSession().get("branchId");
     bool result = await DataConnectionChecker().hasConnection;
     if (result) {
       List<GroupTable> item = [];
-      var url = Config.urlGroupTable + "?branchId=$branch";
+      var url = Config.urlGroupTable + "?branchId=$branchId";
       var response = await http.get(url);
       if (response.statusCode == 200) {
         var groupList = json.decode(response.body) as List;

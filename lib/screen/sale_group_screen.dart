@@ -60,7 +60,7 @@ class _SaleGroupScreenState extends State<SaleGroupScreen> {
       length: lsGroupItem.length,
       initialIndex: 0,
       child: Scaffold(
-        drawer: GlobleDrawerWidget(),
+        //drawer: GlobleDrawerWidget(),
         appBar: AppBar(
           actions: [
             Row(
@@ -118,18 +118,6 @@ class _SaleGroupScreenState extends State<SaleGroupScreen> {
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.chevron_left, size: 32),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => TableGroupScreen(),
-                      ),
-                    );
-                  },
-                ),
               ],
             )
           ],
@@ -146,25 +134,23 @@ class _SaleGroupScreenState extends State<SaleGroupScreen> {
             labelPadding: EdgeInsets.only(right: 40),
             isScrollable: true,
             indicatorColor: Colors.black,
-            tabs: lsGroupItem.map(
-              (group1) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Tab(
-                    child: Text(
-                      group1.name,
-                      style: GoogleFonts.laila(
-                        textStyle: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
+            tabs: lsGroupItem.map((group1) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Tab(
+                  child: Text(
+                    group1.name,
+                    style: GoogleFonts.laila(
+                      textStyle: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                );
-              },
-            ).toList(),
+                ),
+              );
+            }).toList(),
           ),
         ),
         body: loading
